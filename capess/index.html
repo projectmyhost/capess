@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Capes Shop</title>
+    <!-- Link Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Menggunakan font Inter untuk tampilan yang bersih */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Biar scrolling ke section-nya smooth */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Styling spesifik untuk button "Focal Print" */
+        .focal-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .focal-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.15); /* Efek kilau ringan */
+            transition: all 0.7s ease-out;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: 1;
+        }
+
+        .focal-button:hover::before {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        .focal-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Utility untuk tata letak Z-Pattern */
+        .z-content-row {
+            display: grid;
+            gap: 2rem;
+            align-items: center;
+        }
+        /* Tata letak untuk Z-Pattern (desktop/tablet) */
+        @media (min-width: 768px) {
+            .z-left-image .img-col { order: 1; }
+            .z-left-image .text-col { order: 2; }
+            .z-right-image .img-col { order: 2; }
+            .z-right-image .text-col { order: 1; }
+
+            .z-left-image {
+                grid-template-columns: 1.5fr 1fr; /* Teks lebih lebar dari gambar */
+            }
+            .z-right-image {
+                grid-template-columns: 1fr 1.5fr; /* Gambar lebih lebar dari teks */
+            }
+        }
+        /* Mobile: Selalu Gambar di atas Teks */
+        @media (max-width: 767px) {
+            .z-content-row {
+                grid-template-columns: 1fr;
+            }
+            .z-content-row .img-col { order: 1; }
+            .z-content-row .text-col { order: 2; }
+        }
+        /* Typing animation styles for hero */
+        .hero-typing {
+            text-align: center;
+            padding: clamp(1.25rem, 4vw, 3.5rem) 1rem;
+            background: linear-gradient(180deg, rgba(15,23,42,0.03), rgba(255,255,255,0));
+            border-radius: 0 0 1rem 1rem;
+            margin-bottom: 2rem;
+        }
+        .typing-text {
+            font-size: clamp(1.1rem, 4vw, 2.25rem);
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: 0.2px;
+            display: inline-block;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        .typing-caret {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: #0ea5e9;
+            margin-left: 6px;
+            vertical-align: middle;
+            animation: blink 0.8s steps(1) infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        /* Global safeguards for responsive text and images */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, p, h1, h2, h3, h4, h5 { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+        p { overflow-wrap: break-word; word-break: break-word; }
+        .text-col p { overflow-wrap: anywhere; }
+        img { max-width: 100%; height: auto; display: block; }
+        .img-col img { width: 100%; max-width: 400px; object-fit: cover; }
+        @media (min-width: 768px) {
+            .img-col img { max-width: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR BARU: Sticky dan Responsive -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <!-- Logo/Title -->
+                <a href="#" class="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight hover:text-blue-600 transition duration-300">
+                DhimzSHOP
+            </a>
+            <!-- Navigation Links (Desktop) -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#produk-a" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300">Menace Cape</a>
+                <a href="#produk-b" class="text-gray-600 hover:text-pink-600 font-medium transition duration-300">Copper Cape</a>
+                <a href="#produk-c" class="text-gray-600 hover:text-green-600 font-medium transition duration-300">Home Cape</a>
+            </nav>
+            <!-- Tombol Pesan Cepat (Mobile/Tablet) -->
+            <a href="#produk-a" class="md:hidden bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-sm">
+                Lihat Produk
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO: Teks mengetik selamat datang -->
+    <section class="hero-typing">
+        <div class="max-w-4xl mx-auto">
+            <div aria-live="polite" class="text-center">
+                <span id="typing-text" class="typing-text" aria-hidden="false"></span>
+                <span id="typing-caret" class="typing-caret" aria-hidden="true"></span>
+            </div>
+        </div>
+    </section>
+    <main class="py-12 md:py-16 lg:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+
+            <!-- Bagian 1: Produk A (Kiri ke Kanan) -->
+            <section id="produk-a" class="z-content-row z-left-image bg-white p-6 md:p-10 rounded-xl shadow-2xl">
+                <div class="text-col space-y-4">
+                        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-blue-800">01. Menace Cape</h2>
+                        <p class="text-gray-600 text-base md:text-lg lg:text-xl">Capes ini hanya dimiliki <b>380rb</b> player di dunia. ini memasuki itungan capes yang rare karena event dari capes itu sudah berakhir. tetapi kamu bisa membeli product capes ini hanya dengan menekan button dibawah ini!</p>
+                    <button onclick="pesanProduk('Menace Cape')" class="focal-button mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg uppercase tracking-wider">
+                        <span class="relative z-10">PESAN SEKARANG VIA WHATSAPP</span>
+                    </button>
+                </div>
+                <div class="img-col flex justify-center">
+                    <!-- Placeholder Gambar: Ganti dengan URL gambarmu sendiri -->
+                    <img src="images/menace.jpeg" width="400" height="400" alt="Menace Cape" class="rounded-lg shadow-lg max-w-full h-auto">
+                </div>
+            </section>
+
+            <!-- Bagian 2: Produk B (Kanan ke Kiri) -->
+            <section id="produk-b" class="z-content-row z-right-image bg-white p-6 md:p-10 rounded-xl shadow-2xl">
+                <div class="text-col space-y-4">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-pink-600">02. Copper Cape</h2>
+                    <p class="text-gray-600 text-base md:text-lg lg:text-xl">Capes ini hanya dimiliki <b>153rb</b> player di dunia. capes ini lumayan rare dikarenakan pengguna dari cape ini terhitung sedikit didunia. tetapi kamu bisa membeli product capes ini hanya dengan menekan button disamping!</p>
+                    <button onclick="pesanProduk('Copper Cape')" class="focal-button mt-4 bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-full text-lg uppercase tracking-wider">
+                        <span class="relative z-10">PESAN SEKARANG VIA WHATSAPP</span>
+                    </button>
+                </div>
+                <div class="img-col flex justify-center">
+                    <!-- Placeholder Gambar: Ganti dengan URL gambarmu sendiri -->
+                    <img src="images/copper.jpeg" width="400" height="400" alt="Copper Cape" class="rounded-lg shadow-lg max-w-full h-auto">
+                </div>
+            </section>
+
+            <!-- Bagian 3: Produk C (Kiri ke Kanan) -->
+            <section id="produk-c" class="z-content-row z-left-image bg-white p-6 md:p-10 rounded-xl shadow-2xl">
+                <div class="text-col space-y-4">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-700">03. Home Cape</h2>
+                    <p class="text-gray-600 text-base md:text-lg lg:text-xl">Capes ini hanya dimiliki <b>242rb</b> player di dunia. capes ini lumayan rare dikarenakan pengguna dari cape ini terhitung sedikit didunia. tetapi kamu bisa membeli product capes ini hanya dengan menekan button disamping ini!</p>
+                    <button onclick="pesanProduk('Home Cape')" class="focal-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-lg uppercase tracking-wider">
+                        <span class="relative z-10">PESAN SEKARANG VIA WHATSAPP</span>
+                    </button>
+                </div>
+                <div class="img-col flex justify-center">
+                    <!-- Placeholder Gambar: Ganti dengan URL gambarmu sendiri -->
+                    <img src="images/home.jpeg" width="400" height="400" alt="Home Cape" class="rounded-lg shadow-lg max-w-full h-auto">
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 DhimzSHOP. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Typing animation: mengetik, pause, menghapus, ulang
+        document.addEventListener('DOMContentLoaded', function () {
+            const el = document.getElementById('typing-text');
+            const text = 'Selamat datang di website DhimzSHOP';
+            let index = 0;
+            let isDeleting = false;
+            const TYPING_SPEED = 80; // ms per karakter
+            const DELETING_SPEED = 40; // ms per karakter saat menghapus
+            const PAUSE_AFTER_TYPING = 1200; // ms saat teks penuh
+            const PAUSE_AFTER_DELETING = 500; // ms setelah terhapus semua
+
+            function tick() {
+                if (!isDeleting) {
+                    el.textContent = text.slice(0, index + 1);
+                    index++;
+                    if (index === text.length) {
+                        setTimeout(function () {
+                            isDeleting = true;
+                            setTimeout(tick, DELETING_SPEED);
+                        }, PAUSE_AFTER_TYPING);
+                        return;
+                    }
+                    setTimeout(tick, TYPING_SPEED);
+                } else {
+                    el.textContent = text.slice(0, index - 1);
+                    index--;
+                    if (index === 0) {
+                        isDeleting = false;
+                        setTimeout(tick, PAUSE_AFTER_DELETING);
+                        return;
+                    }
+                    setTimeout(tick, DELETING_SPEED);
+                }
+            }
+
+            // Start animation
+            tick();
+        });
+    </script>
+
+    <script>
+        // Ganti dengan Nomor WhatsApp kamu (termasuk kode negara, cth: 6281234567890)
+        const whatsappNumber = '6282311415124'; // **GANTI NOMOR INI**
+
+        /**
+         * Fungsi untuk membuat link WhatsApp dengan pesan otomatis.
+         * @param {string} productName - Nama produk yang dipilih.
+         */
+        function pesanProduk(productName) {
+            // Encode pesan agar aman untuk URL
+            const encodedMessage = encodeURIComponent(`Halo, saya ingin membeli produk ${productName}`);
+
+            // Membuat link WhatsApp
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            // Mengarahkan pengguna ke link WhatsApp
+            window.open(whatsappLink, '_blank');
+        }
+    </script>
+
+</body>
+</html>
